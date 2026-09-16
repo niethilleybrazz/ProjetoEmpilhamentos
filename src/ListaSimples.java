@@ -80,4 +80,34 @@ public class ListaSimples {
         if (estaVazia()) throw new RuntimeException("Estrutura vazia!");
         return fim.getDado();
     }
+
+    public void inserirMeio(int valor, int posicao){
+        if (posicao <= 0){
+            inserirInicio(valor);
+            return;
+        }
+        if (posicao >= tamanho){
+            inserirFim(valor);
+            return;
+        }
+
+        No novo = new No(valor);
+        No atual = inicio;
+        for (int i = 0; i < posicao - 1; i++){
+            atual = atual.getProx();
+        }
+        novo.setProx(atual.getProx());
+        atual.setProx(novo);
+        tamanho++;
+    }
+
+    public void imprimir(String nome) {
+        System.out.print(nome + ": [ ");
+        No atual = inicio;
+        while (atual != null) {
+            System.out.print(atual.getDado() + (atual.getProx() != null ? " -> " : ""));
+            atual = atual.getProx();
+        }
+        System.out.println(" ] (Tamanho: " + tamanho + ")");
+    }
 }
