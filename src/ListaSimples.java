@@ -38,6 +38,7 @@ public class ListaSimples {
             fim.setProx(novo);
             fim=novo;
         }
+        tamanho++;
     }
 
     public int removerInicio(){
@@ -101,11 +102,21 @@ public class ListaSimples {
         tamanho++;
     }
 
+    public ListaSimples copiar() {
+        ListaSimples copia = new ListaSimples();
+        No atual = this.inicio;
+        while (atual != null) {
+            copia.inserirFim(atual.getDado());
+            atual = atual.getProx();
+        }
+        return copia;
+    }
+
     public void imprimir(String nome) {
         System.out.print(nome + ": [ ");
         No atual = inicio;
         while (atual != null) {
-            System.out.print(atual.getDado() + (atual.getProx() != null ? " -> " : ""));
+            System.out.print(atual.getDado() + (atual.getProx() != null ? " - " : ""));
             atual = atual.getProx();
         }
         System.out.println(" ] (Tamanho: " + tamanho + ")");
