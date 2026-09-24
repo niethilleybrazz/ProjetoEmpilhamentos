@@ -2,7 +2,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static void main(String[] args) {
+    // 1. Correção: Faltava o 'public' antes do static void main
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
@@ -12,11 +13,8 @@ public class Main {
         Fila F = new Fila();
         Deque D = new Deque();
 
-        // 1 - Geração e Insersão
-        System.out.println("----------------------------------------------------");
-        System.out.println("1. GERANDO 20 ELEMENTOS ALEATÓRIOS E INSERINDO EM L1");
-        System.out.println("----------------------------------------------------");
-
+        // 1 - Geração e Inserção
+        System.out.println("\n--- 1. Gerando 20 elementos e inserindo em L1 ---");
         for (int i = 1; i <= 20; i++) {
             int num = random.nextInt(100) + 1;
             System.out.printf("\n[%d/20] Número gerado: %d\n", i, num);
@@ -80,5 +78,66 @@ public class Main {
             }
         }
         L2.imprimir("L2 (Ordenada)");
+
+        // 5 - Múltiplos de 3 na lista L1
+        System.out.println("\n--- 5. Múltiplos de 3 em L1 ---");
+        System.out.print("Múltiplos de 3: ");
+        No atualL1 = L1.inicio;
+        while (atualL1 != null) {
+            if (atualL1.getDado() % 3 == 0) System.out.print(atualL1.getDado() + " ");
+            atualL1 = atualL1.getProx();
+        }
+        System.out.println();
+
+        // Invertendo
+        System.out.println("\n--- 6. Inverter L2 usando Pilha Auxiliar ---");
+        Pilha pilhaAux = new Pilha();
+        while (!L2.estaVazia()) {
+            pilhaAux.push(L2.removerInicio());
+        }
+        while (!pilhaAux.estaVazia()) {
+            L2.inserirFim(pilhaAux.pop());
+        }
+        L2.imprimir("L2 Invertida");
+
+        // Pilhas P e F
+        System.out.println("\n--- 7. Pilha P para Fila F ---");
+        while (!P.estaVazia()) {
+            F.enqueue(P.pop());
+        }
+        F.imprimir("Fila F");
+        P.imprimir("Pilha P");
+
+        // Deque
+        System.out.println("\n--- 8. L2 alternado no Deque D ---");
+        No atualL2 = L2.inicio;
+        boolean insereInicio = true;
+        while (atualL2 != null) {
+            if (insereInicio) D.inserirInicio(atualL2.getDado());
+            else D.inserirFim(atualL2.getDado());
+
+            insereInicio = !insereInicio;
+            atualL2 = atualL2.getProx();
+        }
+        D.imprimir("Deque D");
+
+        // Invertendo
+        System.out.println("\n--- 9. Inverter IN LOCU 1º e último de L1 ---");
+        if (L1.getTamanho() >= 2) {
+            int temp = L1.inicio.getDado();
+            L1.inicio.setDado(L1.fim.getDado());
+            L1.fim.setDado(temp);
+        }
+        L1.imprimir("L1 após troca pontas");
+
+        // Estrutura final
+        System.out.println("\n--- 10. Estruturas Finais ---");
+        L1.imprimir("L1");
+        L2.imprimir("L2");
+        P.imprimir("Pilha P");
+        F.imprimir("Fila F");
+        D.imprimir("Deque D");
+
+        scanner.close();
     }
 }
